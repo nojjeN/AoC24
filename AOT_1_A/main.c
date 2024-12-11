@@ -2,15 +2,14 @@
 #include <stdlib.h>
 #include <math.h>
 
+#define MAX_ROWS 1000
 
-// Comparison function
 int compare(const void* a, const void* b) {
    return (*(int*)a - *(int*)b);
 }
 
-
 int main() {
-    
+
     FILE* fPtr = fopen("input.txt", "r");
 
     if(fPtr == NULL) {
@@ -18,18 +17,14 @@ int main() {
         fclose(fPtr);
     }
 
-    int arr1[1000], arr2[1000];
-
+    int arr1[MAX_ROWS], arr2[MAX_ROWS];
     int arr1Index = 0, arr2Index = 0;
 
     int num;
     int counter = 0;
     int sum = 0;
 
-    while (fscanf(fPtr, "%d", &num) == 1)
-    {
-        printf("Index:%d, num:%d\n", counter, num);
-
+    while (fscanf(fPtr, "%d", &num) == 1) {
         if(counter % 2 == 0) {
             arr1[arr1Index++] = num;
         } else {
@@ -38,15 +33,12 @@ int main() {
         counter++;
     }
 
-    qsort(arr1, 1000, sizeof(int), compare);
-    qsort(arr2, 1000, sizeof(int), compare);
+    qsort(arr1, MAX_ROWS, sizeof(int), compare);
+    qsort(arr2, MAX_ROWS, sizeof(int), compare);
 
-
-
-    for(int i=0; i<1000; i++) {
+    for(int i=0; i<MAX_ROWS; i++) {
         sum += abs(arr1[i] - arr2[i]);
     }
- 
 
     printf("%d", sum);
 
