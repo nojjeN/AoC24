@@ -54,7 +54,6 @@ bool checkArray(int* arr, int size) {
 
         if(asc == -1) {
             asc = prevNum < arr[i];
-
         } 
 
         if(followsRules(arr[i], prevNum, asc)) {
