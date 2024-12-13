@@ -6,7 +6,7 @@
 #define MAX_WIDTH_HEIGHT 140
 
 int checkXmasFromCell(char (*arr)[MAX_WIDTH_HEIGHT], int row, int column);
-bool checkArrIfXmas(char * arr, int row, int col);
+bool checkArrIfXmas(char * arr);
 
 int main() {
 
@@ -23,24 +23,17 @@ int main() {
     for (int i = 0; i < MAX_WIDTH_HEIGHT; i++) {
         for (int j = 0; j < MAX_WIDTH_HEIGHT; j++) {
             char ch = fgetc(file);
-            if (ch == EOF || ch == '\n') { // Handle unexpected EOF or newline in the middle
+            if (ch == EOF || ch == '\n') {
                 fprintf(stderr, "Unexpected file format or end of file.\n");
                 fclose(file);
                 return 1;
             }
             arr[i][j] = ch;
         }
-        fgetc(file); // Skip the newline character after each row
+        fgetc(file);
     }
 
     fclose(file);
-
-
-        printf("1:%s\n", arr[1]);
-        printf("2:%s\n", arr[2]);
-        printf("3:%s\n", arr[3]);
-        printf("4:%s\n", arr[4]);
-
     
     for (int i=0; i<MAX_WIDTH_HEIGHT; i++) {
         for (int j=0; j<MAX_WIDTH_HEIGHT; j++) {
@@ -55,13 +48,6 @@ int main() {
     return 0;
 }
 
-
-
-//MMMSXXMASM
-//MSAMXMSMSA
-//AMXSXMAAMM
-//MSAMASMSMX
-
 int checkXmasFromCell(char (*arr)[MAX_WIDTH_HEIGHT], int row, int column) {
     int occurences = 0;
 
@@ -70,20 +56,20 @@ int checkXmasFromCell(char (*arr)[MAX_WIDTH_HEIGHT], int row, int column) {
         arrToTest[0] = arr[row-1][column];
         arrToTest[1] = arr[row-2][column];
         arrToTest[2] = arr[row-3][column];
-        occurences += checkArrIfXmas(arrToTest, row, column);
+        occurences += checkArrIfXmas(arrToTest);
 
         if(column - 3 >= 0) {
             arrToTest[0] = arr[row-1][column-1];
             arrToTest[1] = arr[row-2][column-2];
             arrToTest[2] = arr[row-3][column-3];
-            occurences += checkArrIfXmas(arrToTest, row, column);
+            occurences += checkArrIfXmas(arrToTest);
 
         }
         if(column + 3 < MAX_WIDTH_HEIGHT) {
             arrToTest[0] = arr[row-1][column+1];
             arrToTest[1] = arr[row-2][column+2];
             arrToTest[2] = arr[row-3][column+3];
-            occurences += checkArrIfXmas(arrToTest, row, column);
+            occurences += checkArrIfXmas(arrToTest);
         }
     }
     if(row + 3 < MAX_WIDTH_HEIGHT) {
@@ -91,19 +77,19 @@ int checkXmasFromCell(char (*arr)[MAX_WIDTH_HEIGHT], int row, int column) {
         arrToTest[1] = arr[row+2][column];
         arrToTest[2] = arr[row+3][column];
 
-        occurences += checkArrIfXmas(arrToTest, row, column);
+        occurences += checkArrIfXmas(arrToTest);
 
         if(column - 3 >= 0) {
             arrToTest[0] = arr[row+1][column-1];
             arrToTest[1] = arr[row+2][column-2];
             arrToTest[2] = arr[row+3][column-3];
-            occurences += checkArrIfXmas(arrToTest, row, column);
+            occurences += checkArrIfXmas(arrToTest);
         }
         if(column + 3 < MAX_WIDTH_HEIGHT) {
             arrToTest[0] = arr[row+1][column+1];
             arrToTest[1] = arr[row+2][column+2];
             arrToTest[2] = arr[row+3][column+3];
-            occurences += checkArrIfXmas(arrToTest, row, column);
+            occurences += checkArrIfXmas(arrToTest);
         }
     }
 
@@ -111,19 +97,19 @@ int checkXmasFromCell(char (*arr)[MAX_WIDTH_HEIGHT], int row, int column) {
         arrToTest[0] = arr[row][column-1];
         arrToTest[1] = arr[row][column-2];
         arrToTest[2] = arr[row][column-3];
-        occurences += checkArrIfXmas(arrToTest, row, column);
+        occurences += checkArrIfXmas(arrToTest);
     }
 
     if(column + 3 < MAX_WIDTH_HEIGHT) {
         arrToTest[0] = arr[row][column+1];
         arrToTest[1] = arr[row][column+2];
         arrToTest[2] = arr[row][column+3];
-        occurences += checkArrIfXmas(arrToTest, row, column);
+        occurences += checkArrIfXmas(arrToTest);
     }
 
     return occurences;
 }
 
-bool checkArrIfXmas(char * arr, int row, int col) {
+bool checkArrIfXmas(char * arr) {
     return arr[0] == 'M' && arr[1] == 'A' && arr[2] == 'S';
 }
