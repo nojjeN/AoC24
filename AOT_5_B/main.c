@@ -8,7 +8,7 @@
 #define ROW_MAX_WIDTH 25
 
 bool checkAgainstRules(int* row, int* rules);
-int getMiddleNumber(int* row, int rowNum);
+int getMiddleNumber(int* row);
 
 int main() {
     FILE* file1 = fopen("input.txt", "r");
@@ -54,11 +54,12 @@ int main() {
 
 
     for(int i=0; i<ROW_COUNT; i++) {
-        if(checkAgainstRules(arr[i], constraints)) {
-            sum += getMiddleNumber(arr[i], i);
+        if(!checkAgainstRules(arr[i], constraints)) {
+            while(!checkAgainstRules(arr[i], constraints));
+
+            sum += getMiddleNumber(arr[i]);
         }
     }
-
     printf("Sum: %d", sum);
     return 0;
 }
@@ -71,6 +72,9 @@ bool checkAgainstRules(int* row, int* rules) {
         }
         for (int j=0; j<RULE_COUNT*2; j+=2) {
             if(row[i] == rules[j+1] && row[i+1] == rules[j]) {
+                int tmp = row[i];
+                row[i] = row[i+1];
+                row[i+1] = tmp;
                 return false;
             }
         }
@@ -78,7 +82,7 @@ bool checkAgainstRules(int* row, int* rules) {
     return true;
 }
 
-int getMiddleNumber(int* row, int rowNum) {
+int getMiddleNumber(int* row) {
     for (int i=0; i<ROW_MAX_WIDTH; i++) {
         if(row[i] == 0) {
             return row[(i-1)/2];
