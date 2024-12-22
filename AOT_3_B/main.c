@@ -32,7 +32,6 @@ int main() {
         regmatch_t matches[300];
 
         int returnInt = regcomp(&regex, "do\\(\\).*?(mul\\(([0-9]{1,3}),([0-9]{1,3})\\))+", REG_EXTENDED);
-        int returnInt = regcomp(&regex, "don't\\(\\).*?(mul\\(([0-9]{1,3}),([0-9]{1,3})\\))+", REG_EXTENDED);
 
 
         if (returnInt) {
